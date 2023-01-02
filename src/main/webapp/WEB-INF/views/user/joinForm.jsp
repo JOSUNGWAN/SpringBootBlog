@@ -4,7 +4,7 @@
 
 
 <div class="container">
-	<form> <!-- json 방식으로 처리하 -->
+	<form> <!-- json 방식으로 처리 -->
 		<div class="form-group">
 			<label for="username">Username</label> <input type="text" class="form-control" placeholder="Enter username" id="username">
 		</div>
