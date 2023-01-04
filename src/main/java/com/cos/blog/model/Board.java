@@ -42,7 +42,7 @@ public class Board {
 	@ColumnDefault("0")
 	private int count;
 	
-	@ManyToOne(fetch = FetchType.EAGER) // EAGER - 기본 전략 무조건들고와, LAZY - 안필요할 수 도있으니 안들고와도
+	@ManyToOne(fetch = FetchType.EAGER) // EAGER - 기본 전략 무조건들고와, LAZY - 안필요할 수 도있으니 안들고와도됨 
 	@JoinColumn(name = "userId")
 	private User user;
 	

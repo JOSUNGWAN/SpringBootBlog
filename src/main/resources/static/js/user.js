@@ -6,6 +6,9 @@ let index = {
 		$("#btn-save").on("click", ()=> { // function(){} 이 아닌 ()=>{} this를 바인딩 하기 위함.		
 			this.save();
 		});
+		$("#btn-login").on("click", ()=> { // function(){} 이 아닌 ()=>{} this를 바인딩 하기 위함.		
+			this.login();
+		});
 	}, save: function(){
 		let data = {
 			username: $("#username").val(),
@@ -30,7 +33,28 @@ let index = {
 		}).fail(function(error){
 			alert(JSON.stringify(error));
 		}); 
+	}, login: function(){
+		let data = {
+			username: $("#username").val(),
+			password: $("#password").val(),
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: "/blog/api/user/login",
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json" 
+			
+		}).done(function(resp){
+			alert("로그인 완료되었습니다.");
+			console.log(resp);
+			location.href = "/blog";
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		}); 
 	}
+	
 }
 
 index.init();
