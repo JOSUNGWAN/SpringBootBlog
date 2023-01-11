@@ -6,9 +6,6 @@ let index = {
 		$("#btn-save").on("click", ()=> { // function(){} 이 아닌 ()=>{} this를 바인딩 하기 위함.		
 			this.save();
 		});
-		$("#btn-login").on("click", ()=> { // function(){} 이 아닌 ()=>{} this를 바인딩 하기 위함.		
-			this.login();
-		});
 	}, save: function(){
 		let data = {
 			username: $("#username").val(),
@@ -20,7 +17,7 @@ let index = {
 		// ajax 통신을 이용해서 3개의 데이터를 json으로 변경해서 insert를 요청!
 		$.ajax({
 			type: "POST",
-			url: "/blog/api/user",
+			url: "/auth/joinProc",
 			data: JSON.stringify(data), // http body데이터
 			contentType: "application/json; charset=utf-8", // body 데이터가 어떤 타입인지(MIME)
 			dataType: "json" // 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게 json 이라면)=>javascript 오브젝트로 변환
@@ -29,32 +26,28 @@ let index = {
 		}).done(function(resp){
 			alert("회원가입이 완료되었습니다.");
 			console.log(resp);
-			location.href = "/blog";
+			location.href = "/";
 		}).fail(function(error){
 			alert(JSON.stringify(error));
 		}); 
-	}, login: function(){
-		let data = {
-			username: $("#username").val(),
-			password: $("#password").val(),
-		};
-		
-		$.ajax({
-			type: "POST",
-			url: "/blog/api/user/login",
-			data: JSON.stringify(data),
-			contentType: "application/json; charset=utf-8",
-			dataType: "json" 
-			
-		}).done(function(resp){
-			alert("로그인 완료되었습니다.");
-			console.log(resp);
-			location.href = "/blog";
-		}).fail(function(error){
-			alert(JSON.stringify(error));
-		}); 
-	}
+	},
 	
 }
 
 index.init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

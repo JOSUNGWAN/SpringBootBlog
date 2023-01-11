@@ -3,33 +3,36 @@ package com.cos.blog.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.dto.ResponseDto;
-import com.cos.blog.model.RoleType;
-import com.cos.blog.model.User;
-import com.cos.blog.service.UserService;
+import com.cos.blog.model.Board;
+import com.cos.blog.service.BoardService;
 
 @RestController
-public class UserApiController {
+public class BoardApiController {
 	
 	@Autowired
-	private UserService userService;
-	
-//	@Autowired 
-//	private HttpSession session; 매개변수 받는 방법말고 DI에서 받아서 사용이 가능 하다.
+	private BoardService boardService;
 
 	
-	@PostMapping("/auth/joinProc")
-	public  ResponseDto<Integer> save(@RequestBody User user) {
-		System.out.println("join호출됨");
-		userService.insert(user);
+	@PostMapping("/api/boardinsert")
+	public  ResponseDto<Integer> save(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
+		boardService.boardinsert(board, principal.getUser());
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	
+	@DeleteMapping("/api/boarddelete/{id}")
+	public ResponseDto<Integer> deleteById(@PathVariable int id) {
+		boardService.boarddelete(id);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
 }
 	
 	

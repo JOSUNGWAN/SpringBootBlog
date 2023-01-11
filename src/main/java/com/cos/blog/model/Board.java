@@ -39,8 +39,7 @@ public class Board {
 	@Lob
 	private String content; // 섬머노트 라이브러리
 	
-	@ColumnDefault("0")
-	private int count;
+	private int count; // 조회
 	
 	@ManyToOne(fetch = FetchType.EAGER) // EAGER - 기본 전략 무조건들고와, LAZY - 안필요할 수 도있으니 안들고와도됨 
 	@JoinColumn(name = "userId")
