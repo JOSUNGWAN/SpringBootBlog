@@ -30,6 +30,28 @@ let index = {
 	
 }
 
+function boardupdate(id) {
+
+	let data = {
+			title: $("#title").val(),
+			content: $("#content").val(),
+		};
+
+		$.ajax({
+			type: "PUT",
+			url: "/api/boardupdate/"+id,
+			data: JSON.stringify(data), 
+			contentType: "application/json; charset=utf-8", 
+			dataType: "json" 
+			
+		}).done(function(resp){
+			alert("글 수정이 완료되었습니다.");
+			location.href = "/";
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		}); 
+	}
+
 function boarddelete(id) {
 				$.ajax({
 					type: "DELETE",
