@@ -10,7 +10,7 @@ let index = {
 	}, save: function(){
 		let data = {
 			title: $("#title").val(),
-			content: $("#content").val()
+			content: $("#content").val(),
 		};
 
 		$.ajax({
@@ -34,7 +34,7 @@ function boardupdate(id) {
 
 	let data = {
 			title: $("#title").val(),
-			content: $("#content").val()
+			content: $("#content").val(),
 		};
 
 		$.ajax({
