@@ -20,11 +20,12 @@ public class UserService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
-	@Transactional(readOnly = true) // 여기부터 kakao 가입, 로그인 구현 이어서
+	@Transactional(readOnly = true) 
 	public User userfind(String username) {
 		
-		User user = userRepository.findByUsername(username).get();
-		
+		User user = userRepository.findByUsername(username).orElseGet(()->{
+			return new User();
+		});
 		return user;
 	}
 	
@@ -47,10 +48,14 @@ public class UserService {
 		User persistance = userRepository.findById(user.getId()).orElseThrow(()->{
 			return new IllegalArgumentException("회원 찾기 실패");
 		});
-		String rawPassword = user.getPassword();
-		String encPassword = encoder.encode(rawPassword);
-		persistance.setPassword(encPassword);
-		persistance.setEmail(user.getEmail());
+		
+		//Validate체크 일반회원만 수정가능하도록 kakao나 sns회원들은 정보수정불가
+		if(persistance.getOauth() == null || persistance.getOauth().equals("")) {
+			String rawPassword = user.getPassword();
+			String encPassword = encoder.encode(rawPassword);
+			persistance.setPassword(encPassword);		
+			persistance.setEmail(user.getEmail());
+		}
 		// 회원 수정 함수 종료시 = 서비스 종료시 = 트랜잭션 종료 = commit이 자동으로 된다.
 		// 영속화된 persistance 객체의 변화가 감지되면 더티체킹이 되어 update문을 날려준다.
 		

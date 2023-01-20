@@ -42,6 +42,8 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private RoleType role; // Enum 을 쓰는게 좋다.
 	
+	private String oauth; // kakao, google 어떤 방식으로 로그인을 했는지 기록
+	
 	@CreationTimestamp // 시간 자동 입력
 	private Timestamp createDate;
 	
