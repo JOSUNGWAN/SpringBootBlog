@@ -20,6 +20,16 @@ public class UserService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	@Transactional(readOnly = true) // 여기부터 kakao 가입, 로그인 구현 이어서
+	public User userfind(String username) {
+		
+		User user = userRepository.findByUsername(username).get();
+		
+		return user;
+	}
+	
+	
+	
 	@Transactional // 전체성공시 commit, 실패시 rollback 짜야함ㅋ
 	public void insert(User user) {
 		String rawPassword = user.getPassword(); // 원문
@@ -43,6 +53,7 @@ public class UserService {
 		persistance.setEmail(user.getEmail());
 		// 회원 수정 함수 종료시 = 서비스 종료시 = 트랜잭션 종료 = commit이 자동으로 된다.
 		// 영속화된 persistance 객체의 변화가 감지되면 더티체킹이 되어 update문을 날려준다.
+		
 	}
 }
 
